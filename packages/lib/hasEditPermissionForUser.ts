@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import { prisma } from "@calcom/prisma";
+=======
+>>>>>>> a2d1dbebb (feat: editmode availbility slider (#11197))
 import { MembershipRole } from "@calcom/prisma/enums";
 import type { TrpcSessionUser } from "@calcom/trpc/server/trpc";
 
