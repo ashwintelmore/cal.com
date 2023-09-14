@@ -10,12 +10,12 @@ import { ZGetInputSchema } from "./get.schema";
 import { ZGetMemberAvailabilityInputSchema } from "./getMemberAvailability.schema";
 import { ZGetMembershipbyUserInputSchema } from "./getMembershipbyUser.schema";
 import { ZHasEditPermissionForUserSchema } from "./hasEditPermissionForUser.schema";
+import { ZHasEditPermissionForUserSchema } from "./hasEditPermissionForUser.schema";
 import { ZInviteMemberInputSchema } from "./inviteMember/inviteMember.schema";
 import { ZInviteMemberByTokenSchemaInputSchema } from "./inviteMemberByToken.schema";
 import { ZListMembersInputSchema } from "./listMembers.schema";
 import { ZPublishInputSchema } from "./publish.schema";
 import { ZRemoveMemberInputSchema } from "./removeMember.schema";
-import { ZResendInvitationInputSchema } from "./resendInvitation.schema";
 import { ZSetInviteExpirationInputSchema } from "./setInviteExpiration.schema";
 import { ZUpdateInputSchema } from "./update.schema";
 import { ZUpdateMembershipInputSchema } from "./updateMembership.schema";
@@ -44,7 +44,6 @@ type TeamsRouterHandlerCache = {
   deleteInvite?: typeof import("./deleteInvite.handler").deleteInviteHandler;
   inviteMemberByToken?: typeof import("./inviteMemberByToken.handler").inviteMemberByTokenHandler;
   hasEditPermissionForUser?: typeof import("./hasEditPermissionForUser.handler").hasEditPermissionForUser;
-  resendInvitation?: typeof import("./resendInvitation.handler").resendInvitationHandler;
 };
 
 const UNSTABLE_HANDLER_CACHE: TeamsRouterHandlerCache = {};
@@ -456,21 +455,4 @@ export const viewerTeamsRouter = router({
         input,
       });
     }),
-  resendInvitation: authedProcedure.input(ZResendInvitationInputSchema).mutation(async ({ ctx, input }) => {
-    if (!UNSTABLE_HANDLER_CACHE.resendInvitation) {
-      UNSTABLE_HANDLER_CACHE.resendInvitation = await import("./resendInvitation.handler").then(
-        (mod) => mod.resendInvitationHandler
-      );
-    }
-
-    // Unreachable code but required for type safety
-    if (!UNSTABLE_HANDLER_CACHE.resendInvitation) {
-      throw new Error("Failed to load handler");
-    }
-
-    return UNSTABLE_HANDLER_CACHE.resendInvitation({
-      ctx,
-      input,
-    });
-  }),
 });
